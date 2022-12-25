@@ -1,5 +1,6 @@
 package br.com.frentecorretora.fakeatm.models;
 
+import java.time.Instant;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -12,6 +13,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "transacoes")
@@ -19,35 +21,37 @@ public class TransacaoModel {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private long idTransacao;
 
     //limite de 5000 reais por transação
     @Column(name = "valor")
     private double valor;
 
     @Column(name = "data_transacao")
-    private Date dataTransacao;
+    private Instant dataTransacao;
 
     @OneToOne
-    @JsonIgnore
-    @JoinColumn(name = "pacote_id")
+    //@JsonIgnore
+    @JsonIgnoreProperties({"transacao","pacote","cliente","contaNumero","conta","contas"})
+    @JoinColumn(name = "pacote_id", unique = true)
     private PacoteModel pacote;
 
-    public TransacaoModel() {
+    public TransacaoModel(){
+        
     }
 
-    public TransacaoModel(double valor, Date dataTransacao, PacoteModel pacote) {
+    public TransacaoModel(double valor, Instant dataTransacao, PacoteModel pacote) {
         this.valor = valor;
         this.dataTransacao = dataTransacao;
         this.pacote = pacote;
     }
 
-    public long getId() {
-        return id;
+    public long getIdTransacao() {
+        return idTransacao;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setIdTransacao(long id) {
+        this.idTransacao = id;
     }
 
     public double getValor() {
@@ -58,11 +62,11 @@ public class TransacaoModel {
         this.valor = valor;
     }
 
-    public Date getDataTransacao() {
+    public Instant getDataTransacao() {
         return dataTransacao;
     }
 
-    public void setDataTransacao(Date dataTransacao) {
+    public void setDataTransacao(Instant dataTransacao) {
         this.dataTransacao = dataTransacao;
     }
 

@@ -5,9 +5,7 @@ import java.time.Instant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.frentecorretora.fakeatm.models.ContaModel;
 import br.com.frentecorretora.fakeatm.models.PacoteModel;
-import br.com.frentecorretora.fakeatm.repos.ContaRepo;
 import br.com.frentecorretora.fakeatm.repos.PacoteRepo;
 
 @Service
@@ -17,9 +15,8 @@ public class PacoteService {
     @Autowired
     private PacoteRepo pacoteRepo;
 
-    @Autowired
-    private ContaRepo contaRepo;
 
+    
     public PacoteModel salvarPacoteService(PacoteModel pacote){
         
 

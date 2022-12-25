@@ -2,6 +2,7 @@ package br.com.frentecorretora.fakeatm.models;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,8 +32,8 @@ public class ContaModel {
     @JoinColumn(name = "cliente_id")
     private ClienteModel cliente;
 
-    @OneToMany(mappedBy = "conta")
-    //@JsonIgnoreProperties("conta")
+    @OneToMany(mappedBy = "conta", cascade = CascadeType.REMOVE)
+    @JsonIgnoreProperties("conta")
     private List <PacoteModel> pacotes;
 
     public ContaModel() {

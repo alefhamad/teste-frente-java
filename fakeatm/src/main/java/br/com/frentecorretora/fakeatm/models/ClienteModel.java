@@ -1,6 +1,7 @@
 package br.com.frentecorretora.fakeatm.models;
 
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,19 +20,19 @@ public class ClienteModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public long id;
 
-    @Column(name = "cliente_nome")
+    @Column(name = "cliente_nome", nullable = false)
     private String clienteNome;
 
-    @Column(name = "cliente_senha")
+    @Column(name = "cliente_senha", nullable = false)
     private String clienteSenha;
 
-    @Column(name = "cliente_endereco")
+    @Column(name = "cliente_endereco", nullable = false)
     private String clienteEndereco;
 
-    @Column(name = "cliente_cpf")
+    @Column(name = "cliente_cpf", nullable = false, unique = true)
     private String clienteCpf;
 
-    @OneToOne(mappedBy = "cliente")
+    @OneToOne(mappedBy = "cliente", cascade = CascadeType.REMOVE)
     @JsonIgnoreProperties("cliente")
     private ContaModel conta;
     //deafult constructor for

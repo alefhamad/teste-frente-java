@@ -1,8 +1,8 @@
 package br.com.frentecorretora.fakeatm.models;
 
 import java.time.Instant;
-import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -35,12 +35,12 @@ public class PacoteModel {
 
     
     @ManyToOne
-    @JsonIgnoreProperties({"pacotes","cliente","contaNumero"})
+    @JsonIgnoreProperties({"pacotes","cliente","contaNumero","conta","contas"})
     @JoinColumn(name = "conta_id")
     private ContaModel conta;
 
-    @OneToOne(mappedBy = "pacote")
-    @JsonIgnoreProperties({"pacotes"})
+    @OneToOne(mappedBy = "pacote", cascade = CascadeType.REMOVE)
+    @JsonIgnoreProperties({"pacotes","cliente","pacote"})
     private TransacaoModel transacao;
 
     public PacoteModel(){

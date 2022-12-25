@@ -28,7 +28,7 @@ public class PacoteController {
     @Autowired
     private PacoteService pacoteService;
 
-   public class CriaPacoteRequest {
+    public class CriaPacoteRequest {
 
         private ContaModel contaModel;
 
@@ -40,17 +40,17 @@ public class PacoteController {
             this.contaModel = contaModel;
         }
 
-   }
+    }
 
-   @PostMapping("/criar")
-   public ResponseEntity<PacoteModel> criarPacote(@RequestBody PacoteModel pacote) {
-        PacoteModel pacoteSalvo = pacoteService.salvarPacoteService(pacote);
-        return ResponseEntity.ok(pacoteSalvo);
-   }
+    @PostMapping("/criar")
+    public ResponseEntity<PacoteModel> criarPacote(@RequestBody PacoteModel pacote) {
+            PacoteModel pacoteSalvo = pacoteService.salvarPacoteService(pacote);
+            return ResponseEntity.ok(pacoteSalvo);
+    }
 
-   @GetMapping("/listar")
-   public ArrayList<PacoteModel> pegaPacotes(){
-    ArrayList<PacoteModel> listaPacotes = (ArrayList<PacoteModel>) pacoteRepo.findAll();
-    return listaPacotes;
+    @GetMapping("/listar")
+    public ArrayList<PacoteModel> pegaPacotes(){
+        ArrayList<PacoteModel> listaPacotes = (ArrayList<PacoteModel>) pacoteRepo.findAll();
+        return listaPacotes;
     }
 }
