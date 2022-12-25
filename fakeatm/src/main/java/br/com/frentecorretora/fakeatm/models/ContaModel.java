@@ -1,5 +1,6 @@
 package br.com.frentecorretora.fakeatm.models;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -12,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.hibernate.type.TrueFalseType;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -26,6 +29,9 @@ public class ContaModel {
     
     @Column(name = "conta_numero", nullable = false, length = 6)
     private String contaNumero;
+
+    @Column(name = "saldo_conta", nullable = true)
+    private int saldoConta;
 
     @OneToOne
     //@JsonIgnoreProperties("conta")
@@ -60,6 +66,8 @@ public class ContaModel {
         this.contaNumero = contaNumero;
     }
 
+    
+
     public ClienteModel getCliente() {
         return cliente;
     }
@@ -74,6 +82,14 @@ public class ContaModel {
 
     public void setPacotes(List<PacoteModel> pacotes) {
         this.pacotes = pacotes;
+    }
+
+    public int getSaldoConta() {
+        return saldoConta;
+    }
+
+    public void setSaldoConta(int saldoConta) {
+        this.saldoConta = saldoConta;
     }
 
     

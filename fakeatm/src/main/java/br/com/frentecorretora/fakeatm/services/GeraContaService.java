@@ -11,7 +11,8 @@ import br.com.frentecorretora.fakeatm.repos.ContaRepo;
 @Service
 public class GeraContaService {
 
-    @Autowired ContaRepo contaRepo;
+    @Autowired 
+    private ContaRepo contaRepo;
 
     public String geraRandom(){
         
