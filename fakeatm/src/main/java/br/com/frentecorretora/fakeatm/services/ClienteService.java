@@ -1,7 +1,6 @@
 package br.com.frentecorretora.fakeatm.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.com.frentecorretora.fakeatm.models.ClienteModel;
@@ -28,16 +27,10 @@ public class ClienteService {
 
 
     public ClienteModel salvarClienteService(ClienteModel cliente){
-
-
-        String encodedSenha = senhaService.senhaEncoder(cliente.getClienteSenha());
-        cliente.setClienteSenha(encodedSenha);
+        cliente.setClienteSenha(senhaService.senhaEncoder(cliente.getClienteSenha()));
         clienteRepo.save(cliente);
-        String random = contaService.geraRandomUnico();
-        ContaModel conta = new ContaModel(random, cliente);
+        ContaModel conta = new ContaModel(contaService.geraRandomUnico(), cliente);
         conta = contaRepo.save(conta);
-        cliente.setClienteSenha("");
-        cliente.setConta(conta);
         return cliente;
     }
 
