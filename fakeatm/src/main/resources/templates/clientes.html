@@ -22,7 +22,7 @@
           </thead>
           <tbody>
             <!-- for each cliente in clientes display each attribute in a row -->
-            <tr th:each="cliente : ${clientes}">
+            <tr th:each="cliente : ${clientes.id}">
               <th scope="row" th:text="${cliente.idCliente}"></td>
               <td><a th:href="@{/private/pacotes/clientepage/{id}(id=${cliente.idCliente})}" th:text="${cliente.clienteNome}"></a></td>
               <td th:text="${cliente.clienteEndereco}"></td>

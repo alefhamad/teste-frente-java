@@ -25,32 +25,18 @@ public class PacoteService {
     
 
     
-    public PacoteModel salvarPacoteService(PacoteModel pacote){
+    public PacoteModel criarPacoteService(PacoteModel pacote){
         
-
-        Instant dataAgora = Instant.now();
-        PacoteModel novoPacote = new PacoteModel(dataAgora, dataAgora, dataAgora, pacote.getConta());
+        PacoteModel novoPacote = new PacoteModel(pacote.getConta());
         pacoteRepo.save(novoPacote);
-        System.out.println(novoPacote);
-        pacote = novoPacote;
-        // PacoteRepo pacoteSalvo = pacoteRepo.findById(pacote.getId());
-        return pacote;
+        return novoPacote;
     }
 
-    //Create a class that receives a clienteModel then gets the accoutn of that client then finds every pacote of that conta
     public ArrayList<PacoteModel> listaPacotes(Long id){
-        //find the cliente by id
         ClienteModel cliente = new ClienteModel();
         cliente = clienteRepo.findById(id).get();
-
-        //print cliente to the console and concatenate a frase
-        System.out.println("Cliente;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; " + cliente);
-
-
         ContaModel conta = cliente.getConta();
-        //print conta to the cosole
         System.out.println(conta);
-
         ArrayList<PacoteModel> listaPacotes = (ArrayList<PacoteModel>) pacoteRepo.findAllByConta(conta);
         return listaPacotes;
     }

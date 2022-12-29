@@ -28,6 +28,12 @@ public class TransacaoModel {
     @Column(name = "data_transacao")
     private Instant dataTransacao;
 
+    @Column(name = "tipo_de_nota")
+    private int tipoDeNota;
+
+    @Column(name = "limite_de_notas")
+    private int limiteDeNotas;
+
     @OneToOne
     //@JsonIgnore
     @JsonIgnoreProperties({"transacao","pacote","cliente","contaNumero","conta","contas"})
@@ -38,11 +44,14 @@ public class TransacaoModel {
         
     }
 
-    public TransacaoModel(double valor, Instant dataTransacao, PacoteModel pacote) {
+    public TransacaoModel(double valor, int tipoDeNota, int limiteDeNotas, PacoteModel pacote) {
         this.valor = valor;
-        this.dataTransacao = dataTransacao;
+        this.tipoDeNota = tipoDeNota;
+        this.limiteDeNotas = limiteDeNotas;
         this.pacote = pacote;
     }
+
+
 
     public long getIdTransacao() {
         return idTransacao;
@@ -76,5 +85,28 @@ public class TransacaoModel {
         this.pacote = pacote;
     }
 
+    public int getTipoDeNota() {
+        return tipoDeNota;
+    }
+
+    public void setTipoDeNota(int tipoDeNota) {
+        if(tipoDeNota == 10 || tipoDeNota == 50 || tipoDeNota == 100){
+        this.tipoDeNota = tipoDeNota;
+        } else {
+            throw new IllegalArgumentException("Tipo de nota inválido");
+        }
+    }
+
+    public int getLimiteDeNotas() {
+        limiteDeNotas = 50;
+        return limiteDeNotas;
+    }
+
+    public void setLimiteDeNotas(int limiteDeNotas) {
+        if(limiteDeNotas > getLimiteDeNotas()){
+            throw new IllegalArgumentException("Limite de notas inválido");
+        }
+        this.limiteDeNotas = limiteDeNotas;
+    }
     
 }

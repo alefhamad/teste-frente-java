@@ -44,7 +44,7 @@ public class PacoteController {
 
     @PostMapping("/criar")
     public ResponseEntity<PacoteModel> criarPacote(@RequestBody PacoteModel pacote) {
-            PacoteModel pacoteSalvo = pacoteService.salvarPacoteService(pacote);
+            PacoteModel pacoteSalvo = pacoteService.criarPacoteService(pacote);
             return ResponseEntity.ok(pacoteSalvo);
     }
 

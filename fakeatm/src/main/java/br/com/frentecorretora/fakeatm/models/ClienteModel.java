@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -46,14 +47,15 @@ public class ClienteModel {
         this.clienteCpf = clienteCpf;
     }
     
-    public long getId() {
+    
+    public long getIdCliente() {
         return idCliente;
     }
 
-    public void setId(long id) {
-        this.idCliente = id;
+    public void setIdCliente(long idCliente) {
+        this.idCliente = idCliente;
     }
-
+    
     public String getClienteNome() {
         return clienteNome;
     }
@@ -93,5 +95,5 @@ public class ClienteModel {
     public void setConta(ContaModel conta) {
         this.conta = conta;
     }
-    
+
 }

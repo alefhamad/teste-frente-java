@@ -32,11 +32,9 @@ public class PacoteModel {
     @Column(name = "data_fechamento")
     private Instant dataFechamento;
 
-    @Column(name = "tipo_de_nota")
-    private int tipoDeNota;
     
     @ManyToOne
-    @JsonIgnoreProperties({"pacotes","cliente","contaNumero","conta","contas","saldoConta"})
+    @JsonIgnoreProperties({"pacotes","cliente","contaNumero","conta","contas","saldoConta","id"})
     @JoinColumn(name = "conta_id")
     private ContaModel conta;
 
@@ -48,11 +46,9 @@ public class PacoteModel {
 
     }
 
-    public PacoteModel(Instant dataCriacao, Instant dataFechamento, ContaModel conta) {
-        this.dataCriacao = dataCriacao;
-        //this.dataAbertura = dataAbertura;
-        this.dataFechamento = dataFechamento;
+    public PacoteModel(ContaModel conta){
         this.conta = conta;
+        this.dataCriacao = Instant.now();
     }
 
     public long getIdPacote() {
@@ -68,23 +64,23 @@ public class PacoteModel {
     }
 
     public void setDataCriacao(Instant dataCriacao) {
-        this.dataCriacao = dataCriacao;
+        this.dataCriacao = Instant.now();
     }
 
     public Instant getDataAbertura() {
         return dataAbertura;
     }
 
-    public void setDataAbertura(Instant dataAbertura) {
-        this.dataAbertura = dataAbertura;
+    public void setDataAbertura() {
+        this.dataAbertura = Instant.now();
     }
 
     public Instant getDataFechamento() {
         return dataFechamento;
     }
 
-    public void setDataFechamento(Instant dataFechamento) {
-        this.dataFechamento = dataFechamento;
+    public void setDataFechamento() {
+        this.dataFechamento = Instant.now();
     }
 
     public ContaModel getConta() {
@@ -102,4 +98,8 @@ public class PacoteModel {
     public void setTransacao(TransacaoModel transacao) {
         this.transacao = transacao;
     }
+
+    
+
+    
 }
