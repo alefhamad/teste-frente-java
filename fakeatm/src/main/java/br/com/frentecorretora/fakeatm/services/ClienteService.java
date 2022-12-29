@@ -31,6 +31,8 @@ public class ClienteService {
         clienteRepo.save(cliente);
         ContaModel conta = new ContaModel(contaService.geraRandomUnico(), cliente);
         conta = contaRepo.save(conta);
+        cliente.setClienteSenha("**********");
+        cliente.setConta(conta);
         return cliente;
     }
 

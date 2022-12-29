@@ -27,11 +27,13 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="client : ${clientes}">
-                    <td th:text="${client.id"></td> 
-                    <td th:text="${client.clienteNome"></td>  
-                    <td th:text="${client.clienteEndereco"></td>  
-                    <td th:text="${client.clienteCpf"></td>  
+                <tr th:each="cliente : ${clientes}">
+                    <td th:text="${cliente.id"></td> 
+                    <!-- if clientenome is cliked, it sends me to that user page -->
+
+                    <td th:text="${cliente.clienteNome"></td>  
+                    <td th:text="${cliente.clienteEndereco"></td>  
+                    <td th:text="${cliente.clienteCpf"></td>  
                     </tr>
             </tbody>
         </table>

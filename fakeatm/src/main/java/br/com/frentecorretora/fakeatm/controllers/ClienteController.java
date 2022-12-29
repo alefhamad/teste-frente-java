@@ -19,7 +19,7 @@ import br.com.frentecorretora.fakeatm.services.ClienteService;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/cliente")
+@RequestMapping("/api/cliente")
 public class ClienteController {
     
     @Autowired

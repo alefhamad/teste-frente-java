@@ -32,9 +32,11 @@ public class PacoteModel {
     @Column(name = "data_fechamento")
     private Instant dataFechamento;
 
+    @Column(name = "tipo_de_nota")
+    private int tipoDeNota;
     
     @ManyToOne
-    @JsonIgnoreProperties({"pacotes","cliente","contaNumero","conta","contas"})
+    @JsonIgnoreProperties({"pacotes","cliente","contaNumero","conta","contas","saldoConta"})
     @JoinColumn(name = "conta_id")
     private ContaModel conta;
 
@@ -46,9 +48,9 @@ public class PacoteModel {
 
     }
 
-    public PacoteModel(Instant dataCriacao, Instant dataAbertura, Instant dataFechamento, ContaModel conta) {
+    public PacoteModel(Instant dataCriacao, Instant dataFechamento, ContaModel conta) {
         this.dataCriacao = dataCriacao;
-        this.dataAbertura = dataAbertura;
+        //this.dataAbertura = dataAbertura;
         this.dataFechamento = dataFechamento;
         this.conta = conta;
     }
@@ -100,7 +102,4 @@ public class PacoteModel {
     public void setTransacao(TransacaoModel transacao) {
         this.transacao = transacao;
     }
-
-    
-
 }

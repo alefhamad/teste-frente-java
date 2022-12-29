@@ -18,7 +18,7 @@ import br.com.frentecorretora.fakeatm.services.PacoteService;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/pacote")
+@RequestMapping("/api/pacotes")
 public class PacoteController {    
 
     @Autowired 

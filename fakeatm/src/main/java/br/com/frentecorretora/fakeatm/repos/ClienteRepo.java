@@ -6,4 +6,7 @@ import br.com.frentecorretora.fakeatm.models.ClienteModel;
 
 public interface ClienteRepo extends CrudRepository<ClienteModel, Long> {
     
+    //find by conta
+    ClienteModel findByConta(ClienteModel conta);
+
 }

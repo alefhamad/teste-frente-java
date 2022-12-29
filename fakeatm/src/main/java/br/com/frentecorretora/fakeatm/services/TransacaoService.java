@@ -16,12 +16,20 @@ public class TransacaoService {
 
     public TransacaoModel salvarTransacaoService(TransacaoModel transacao) {
         
-        Instant dataAgora = Instant.now();
-        TransacaoModel novaTransacao = new TransacaoModel(0, dataAgora, transacao.getPacote());
-        transacaoRepo.save(novaTransacao);
+        
+        TransacaoModel novaTransacao = transacaoRepo.save(transacao);
         transacao = novaTransacao;
         return transacao;
 
     }
     
+    //public TransacaoModel listarTransacoes()
+    public TransacaoModel criarTransacaoService(TransacaoModel transacao) {
+        
+        Instant dataAgora = Instant.now();
+        TransacaoModel novaTransacao = new TransacaoModel(0, dataAgora, transacao.getPacote());
+        transacao.getValor();
+
+        return transacao;
+    }
 }
