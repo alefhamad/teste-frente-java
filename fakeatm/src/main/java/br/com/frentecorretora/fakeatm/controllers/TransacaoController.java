@@ -17,7 +17,7 @@ import br.com.frentecorretora.fakeatm.services.TransacaoService;
 
 @RestController 
 @CrossOrigin("*")
-@RequestMapping("/api/transacoes")
+@RequestMapping("/api/transacao")
 public class TransacaoController {
 
     @Autowired 
