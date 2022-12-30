@@ -8,7 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -25,33 +25,43 @@ public class TransacaoModel {
     @Column(name = "valor")
     private double valor;
 
-    @Column(name = "data_transacao")
+    @Column(name = "data_transacao", updatable = false)
     private Instant dataTransacao;
 
-    @Column(name = "tipo_de_nota")
+    @Column(name = "tipo_de_nota", nullable = true)
     private int tipoDeNota;
 
-    @Column(name = "limite_de_notas")
+    @Column(name = "limite_de_notas", nullable = true)
     private int limiteDeNotas;
 
-    @OneToOne
+    @Column(name = "limite_de_valor", nullable = true)
+    private double limiteDeValor;
+
+    @Column(name = "status_transacao", nullable = true)
+    private String statusTransacao;
+
+    @ManyToOne
     //@JsonIgnore
     @JsonIgnoreProperties({"transacao","pacote","cliente","contaNumero","conta","contas"})
-    @JoinColumn(name = "pacote_id", unique = true)
+    @JoinColumn(name = "pacote_id")
     private PacoteModel pacote;
 
     public TransacaoModel(){
         
     }
 
-    public TransacaoModel(double valor, int tipoDeNota, int limiteDeNotas, PacoteModel pacote) {
-        this.valor = valor;
-        this.tipoDeNota = tipoDeNota;
-        this.limiteDeNotas = limiteDeNotas;
+    public TransacaoModel(PacoteModel pacote) {
         this.pacote = pacote;
     }
 
-
+    public TransacaoModel(double valor, int tipoDeNota, String statusTransacao, PacoteModel pacote) {
+        this.valor = valor;
+        this.tipoDeNota = tipoDeNota;
+        this.limiteDeNotas = 50;
+        this.limiteDeValor = 5000.00;
+        this.statusTransacao = statusTransacao;
+        this.pacote = pacote;
+    }
 
     public long getIdTransacao() {
         return idTransacao;
@@ -108,5 +118,22 @@ public class TransacaoModel {
         }
         this.limiteDeNotas = limiteDeNotas;
     }
+
+    public double getLimiteDeValor() {
+        return limiteDeValor;
+    }
+
+    public void setLimiteDeValor(double limiteDeValor) {
+        this.limiteDeValor = limiteDeValor;
+    }
+
+    public String getStatusTransacao() {
+        return statusTransacao;
+    }
+
+    public void setStatusTransacao(String statusTransacao) {
+        this.statusTransacao = statusTransacao;
+    }
+    
     
 }

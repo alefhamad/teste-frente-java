@@ -32,6 +32,9 @@ public class PacoteModel {
     @Column(name = "data_fechamento")
     private Instant dataFechamento;
 
+    @Column(name = "status_pacote")
+    private String statusPacote;
+
     
     @ManyToOne
     @JsonIgnoreProperties({"pacotes","cliente","contaNumero","conta","contas","saldoConta","id"})
@@ -49,6 +52,7 @@ public class PacoteModel {
     public PacoteModel(ContaModel conta){
         this.conta = conta;
         this.dataCriacao = Instant.now();
+        this.statusPacote = "Aberto";
     }
 
     public long getIdPacote() {
@@ -98,8 +102,6 @@ public class PacoteModel {
     public void setTransacao(TransacaoModel transacao) {
         this.transacao = transacao;
     }
-
-    
 
     
 }

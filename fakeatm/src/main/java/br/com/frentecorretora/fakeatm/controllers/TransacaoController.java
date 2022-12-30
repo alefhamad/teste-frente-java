@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.frentecorretora.fakeatm.models.ContaModel;
 import br.com.frentecorretora.fakeatm.models.TransacaoModel;
 import br.com.frentecorretora.fakeatm.repos.TransacaoRepo;
 import br.com.frentecorretora.fakeatm.services.TransacaoService;
@@ -27,8 +28,8 @@ public class TransacaoController {
     private TransacaoService transacaoService;
 
     @PostMapping("/criar")
-    public ResponseEntity<TransacaoModel> criarTransacao(@RequestBody TransacaoModel transacao) {
-        TransacaoModel transacaoSalva = transacaoService.salvarTransacaoService(transacao);
+    public ResponseEntity<TransacaoModel> criarTransacao(@RequestBody ContaModel conta) {
+        TransacaoModel transacaoSalva = transacaoService.criarTransacaoService(conta);
         return ResponseEntity.ok(transacaoSalva);
     }
 
@@ -37,5 +38,6 @@ public class TransacaoController {
         ArrayList<TransacaoModel> listaTransacoes = (ArrayList<TransacaoModel>) transacaoRepo.findAll();
         return listaTransacoes;
     }
+
     
 }

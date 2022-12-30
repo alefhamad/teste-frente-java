@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +19,7 @@ import br.com.frentecorretora.fakeatm.services.PacoteService;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/api/pacotes")
+@RequestMapping("/api/pacote")
 public class PacoteController {    
 
     @Autowired 
@@ -43,8 +44,8 @@ public class PacoteController {
     }
 
     @PostMapping("/criar")
-    public ResponseEntity<PacoteModel> criarPacote(@RequestBody PacoteModel pacote) {
-            PacoteModel pacoteSalvo = pacoteService.criarPacoteService(pacote);
+    public ResponseEntity<PacoteModel> criarPacote(@RequestBody ContaModel conta) {
+            PacoteModel pacoteSalvo = pacoteService.criarPacoteService(conta);
             return ResponseEntity.ok(pacoteSalvo);
     }
 
@@ -52,5 +53,11 @@ public class PacoteController {
     public ArrayList<PacoteModel> pegaPacotes(){
         ArrayList<PacoteModel> listaPacotes = (ArrayList<PacoteModel>) pacoteRepo.findAll();
         return listaPacotes;
+    }
+
+    @GetMapping("/listaUltimo/{id}")
+    public PacoteModel pegaUltimoPacote(@PathVariable("id") Long id){
+        PacoteModel ultimoPacote = pacoteService.listaUltimoPacoteDaConta(id);
+        return ultimoPacote;
     }
 }

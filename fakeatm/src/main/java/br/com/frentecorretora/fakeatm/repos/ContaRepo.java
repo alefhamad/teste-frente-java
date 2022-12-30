@@ -8,5 +8,6 @@ public interface ContaRepo extends CrudRepository<ContaModel, Long> {
     
     public ContaModel findById(long id);
 
-    public ContaModel findByContaNumero(String contaNumero);
+    public ContaModel findByContaNumero(String contaNumero); 
+    
 }

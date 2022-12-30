@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.frentecorretora.fakeatm.models.ClienteModel;
 import br.com.frentecorretora.fakeatm.services.ClienteService;
-import net.bytebuddy.asm.Advice.Return;
 
 @RestController
 @CrossOrigin("*")
@@ -35,9 +34,15 @@ public class ClienteController {
 
     @PostMapping("/criar")
     //post mapping to create new client ans save it to the database
-    public ResponseEntity<ClienteModel> criarCliente(@RequestBody ClienteModel cliente) {
+    public ResponseEntity<String> criarCliente(@RequestBody ClienteModel cliente){
         ClienteModel clienteSalvo = clienteService.salvarClienteService(cliente);
-        return ResponseEntity.ok(clienteSalvo);
+        //return ResponseEntity.ok(clienteSalvo);
+        //return the client saved if null return bad request
+        if(clienteSalvo != null){
+        return ResponseEntity.ok().body("Cliente salvo com sucesso!");
+        }else{
+        return ResponseEntity.badRequest().body(cliente.getClienteCpf().toString() + " já cadastrado") ;
+        }
     }
 
     @DeleteMapping("/deletar/{idCliente}")
@@ -47,5 +52,16 @@ public class ClienteController {
         return ResponseEntity.noContent().build();
     }
 
-    
+    @GetMapping("/valida/{cpf}")
+    public ResponseEntity<Boolean> validaCliente(@PathVariable("cpf") String cpf){
+        boolean valida = clienteService.validaCpf(cpf);
+        return ResponseEntity.ok(valida);
+    }
+
+    @PostMapping("/valida")
+    //receive a clientemodel and returns a string
+    public ResponseEntity<String> validaCliente(@RequestBody ClienteModel cliente){
+        String valida = clienteService.validaClienteModel(cliente);
+        return ResponseEntity.ok(valida);
+    }
 }
