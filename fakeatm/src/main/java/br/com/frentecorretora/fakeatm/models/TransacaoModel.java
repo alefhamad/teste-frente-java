@@ -40,8 +40,10 @@ public class TransacaoModel {
     @Column(name = "status_transacao", nullable = true)
     private String statusTransacao;
 
+    @Column(name = "quantidade_de_notas", nullable = true)
+    private double quantidadeDeNotas;
+
     @ManyToOne
-    //@JsonIgnore
     @JsonIgnoreProperties({"transacao","pacote","cliente","contaNumero","conta","contas"})
     @JoinColumn(name = "pacote_id")
     private PacoteModel pacote;
@@ -133,6 +135,14 @@ public class TransacaoModel {
 
     public void setStatusTransacao(String statusTransacao) {
         this.statusTransacao = statusTransacao;
+    }
+
+    public double getQuantidadeDeNotas() {
+        return quantidadeDeNotas;
+    }
+
+    public void setQuantidadeDeNotas(double quantidadeDeNotas) {
+        this.quantidadeDeNotas = quantidadeDeNotas;
     }
     
     

@@ -36,8 +36,6 @@ public class ClienteController {
     //post mapping to create new client ans save it to the database
     public ResponseEntity<String> criarCliente(@RequestBody ClienteModel cliente){
         ClienteModel clienteSalvo = clienteService.salvarClienteService(cliente);
-        //return ResponseEntity.ok(clienteSalvo);
-        //return the client saved if null return bad request
         if(clienteSalvo != null){
         return ResponseEntity.ok().body("Cliente salvo com sucesso!");
         }else{

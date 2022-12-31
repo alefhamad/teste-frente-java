@@ -44,10 +44,35 @@ public class PacoteService {
     }
     
     public PacoteModel listaUltimoPacoteDaConta(Long id){
+
         ContaModel conta = contaRepo.findById(id).get();
-        PacoteModel pacote = pacoteRepo.findAllByContaOrderByIdPacoteDesc(conta).get(0);
-        //reverse the list 
-        //Collections.reverse(listaPacotes);
+        PacoteModel pacote = pacoteRepo.findTopByContaOrderByIdPacoteDesc(conta);
+        if(pacote == null){
+            return null;
+        }
         return pacote;
     }
+
+    public boolean statusUltimoPacote(Long id){
+
+        PacoteModel pacote = listaUltimoPacoteDaConta(id);
+
+        if (pacote == null || pacote.getStatusPacote().equals("Fechado")){
+        return true;
+        }else {
+        return false;
+        }
+    }
+
+    public PacoteModel criarPacoteServiceVazio(ContaModel conta){
+        boolean statusPacote = statusUltimoPacote(conta.getIdConta());
+        if(!statusPacote){
+            return null;
+        }
+        PacoteModel novoPacote = new PacoteModel(conta);
+        pacoteRepo.save(novoPacote);
+        return novoPacote;
+    }
 }
+
+

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.frentecorretora.fakeatm.models.ContaModel;
 import br.com.frentecorretora.fakeatm.models.PacoteModel;
+import br.com.frentecorretora.fakeatm.repos.ContaRepo;
 import br.com.frentecorretora.fakeatm.repos.PacoteRepo;
 import br.com.frentecorretora.fakeatm.services.PacoteService;
 
@@ -29,6 +30,9 @@ public class PacoteController {
     @Autowired
     private PacoteService pacoteService;
 
+    @Autowired
+    private ContaRepo contaRepo;
+
     public class CriaPacoteRequest {
 
         private ContaModel contaModel;
@@ -43,10 +47,16 @@ public class PacoteController {
 
     }
 
-    @PostMapping("/criar")
-    public ResponseEntity<PacoteModel> criarPacote(@RequestBody ContaModel conta) {
-            PacoteModel pacoteSalvo = pacoteService.criarPacoteService(conta);
-            return ResponseEntity.ok(pacoteSalvo);
+    @PostMapping("/criar/{numero}")
+    public ResponseEntity<String> criarPacote(@PathVariable("numero") String numero) {
+            ContaModel conta = contaRepo.findByContaNumero(numero);
+            
+            PacoteModel pacoteSalvo = pacoteService.criarPacoteServiceVazio(conta);
+            if(pacoteSalvo != null){
+                return ResponseEntity.ok().body("Pacote criado com sucesso!");
+            }
+            return ResponseEntity.badRequest().body("Parece que você tem pacotes abertos de mais!");
+            
     }
 
     @GetMapping("/listar")

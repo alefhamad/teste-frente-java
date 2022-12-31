@@ -1,6 +1,7 @@
 package br.com.frentecorretora.fakeatm.models;
 
 import java.time.Instant;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,7 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -41,9 +42,9 @@ public class PacoteModel {
     @JoinColumn(name = "conta_id")
     private ContaModel conta;
 
-    @OneToOne(mappedBy = "pacote", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "pacote", cascade = CascadeType.REMOVE)
     @JsonIgnoreProperties({"pacotes","cliente","pacote"})
-    private TransacaoModel transacao;
+    private List<TransacaoModel> transacao;
 
     public PacoteModel(){
 
@@ -95,13 +96,20 @@ public class PacoteModel {
         this.conta = conta;
     }
 
-    public TransacaoModel getTransacao() {
+    public String getStatusPacote() {
+        return statusPacote;
+    }
+
+    public void setStatusPacote(String statusPacote) {
+        this.statusPacote = statusPacote;
+    }
+
+    public List<TransacaoModel> getTransacao() {
         return transacao;
     }
 
-    public void setTransacao(TransacaoModel transacao) {
+    public void setTransacao(List<TransacaoModel> transacao) {
         this.transacao = transacao;
     }
-
     
 }

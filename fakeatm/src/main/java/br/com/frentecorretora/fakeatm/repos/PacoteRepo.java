@@ -12,5 +12,5 @@ public interface PacoteRepo extends CrudRepository<PacoteModel, Long>{
 
     ArrayList<PacoteModel> findAllByConta(ContaModel conta);
     //ArrayList<PacoteModel> findAllByConta(Long id);
-    ArrayList<PacoteModel> findAllByContaOrderByIdPacoteDesc(ContaModel conta);
+    PacoteModel findTopByContaOrderByIdPacoteDesc(ContaModel conta);
 }
