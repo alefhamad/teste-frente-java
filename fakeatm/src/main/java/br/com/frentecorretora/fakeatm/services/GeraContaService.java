@@ -14,9 +14,10 @@ public class GeraContaService {
     @Autowired 
     private ContaRepo contaRepo;
 
+    Random rand = new Random();
+
     public String geraRandom(){
         
-        Random rand = new Random();
         int numeroConta = rand.nextInt(900000) + 100000;
 
         return String.valueOf(numeroConta);

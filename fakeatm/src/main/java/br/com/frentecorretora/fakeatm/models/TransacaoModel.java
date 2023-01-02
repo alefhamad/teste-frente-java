@@ -40,8 +40,8 @@ public class TransacaoModel {
     @Column(name = "status_transacao", nullable = true)
     private String statusTransacao;
 
-    @Column(name = "quantidade_de_notas", nullable = true)
-    private double quantidadeDeNotas;
+    @Column(name = "quantidade_notas_utilizadas", nullable = true)
+    private int quantidadeNotasUtilizadas;
 
     @ManyToOne
     @JsonIgnoreProperties({"transacao","pacote","cliente","contaNumero","conta","contas"})
@@ -56,12 +56,15 @@ public class TransacaoModel {
         this.pacote = pacote;
     }
 
-    public TransacaoModel(double valor, int tipoDeNota, String statusTransacao, PacoteModel pacote) {
+    public TransacaoModel(double valor, int tipoDeNota, String statusTransacao, int quantidadeNotasUtilizadas, double limiteDeValor, PacoteModel pacote) {
         this.valor = valor;
         this.tipoDeNota = tipoDeNota;
         this.limiteDeNotas = 50;
         this.limiteDeValor = 5000.00;
+        this.dataTransacao = Instant.now();
         this.statusTransacao = statusTransacao;
+        this.quantidadeNotasUtilizadas = quantidadeNotasUtilizadas;
+        this.limiteDeValor = limiteDeValor;
         this.pacote = pacote;
     }
 
@@ -85,8 +88,8 @@ public class TransacaoModel {
         return dataTransacao;
     }
 
-    public void setDataTransacao(Instant dataTransacao) {
-        this.dataTransacao = dataTransacao;
+    public void setDataTransacao() {
+        this.dataTransacao = Instant.now();
     }
 
     public PacoteModel getPacote() {
@@ -115,9 +118,6 @@ public class TransacaoModel {
     }
 
     public void setLimiteDeNotas(int limiteDeNotas) {
-        if(limiteDeNotas > getLimiteDeNotas()){
-            throw new IllegalArgumentException("Limite de notas inválido");
-        }
         this.limiteDeNotas = limiteDeNotas;
     }
 
@@ -137,13 +137,13 @@ public class TransacaoModel {
         this.statusTransacao = statusTransacao;
     }
 
-    public double getQuantidadeDeNotas() {
-        return quantidadeDeNotas;
+    public int getQuantidadeNotasUtilizadas() {
+        return quantidadeNotasUtilizadas;
     }
 
-    public void setQuantidadeDeNotas(double quantidadeDeNotas) {
-        this.quantidadeDeNotas = quantidadeDeNotas;
-    }
+    public void setQuantidadeNotasUtilizadas(int quantidadeNotasUtilizadas) {
+        this.quantidadeNotasUtilizadas = quantidadeNotasUtilizadas;
+    } 
     
     
 }

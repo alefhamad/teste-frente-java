@@ -1,14 +1,11 @@
 package br.com.frentecorretora.fakeatm.services;
 
-import java.util.ArrayList;
-
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.frentecorretora.fakeatm.models.ClienteModel;
 import br.com.frentecorretora.fakeatm.models.ContaModel;
 import br.com.frentecorretora.fakeatm.models.PacoteModel;
-import br.com.frentecorretora.fakeatm.repos.ClienteRepo;
 import br.com.frentecorretora.fakeatm.repos.ContaRepo;
 import br.com.frentecorretora.fakeatm.repos.PacoteRepo;
 
@@ -18,9 +15,6 @@ public class PacoteService {
 
     @Autowired
     private PacoteRepo pacoteRepo;
-
-    @Autowired
-    private ClienteRepo clienteRepo;
 
     @Autowired
     private ContaRepo contaRepo;
@@ -34,38 +28,22 @@ public class PacoteService {
         return novoPacote;
     }
 
-    public ArrayList<PacoteModel> listaPacotes(Long id){
-        ClienteModel cliente = new ClienteModel();
-        cliente = clienteRepo.findById(id).get();
-        ContaModel conta = cliente.getConta();
-        System.out.println(conta);
-        ArrayList<PacoteModel> listaPacotes = (ArrayList<PacoteModel>) pacoteRepo.findAllByConta(conta);
-        return listaPacotes;
+    public List<PacoteModel> listaPacotes(String numeroConta){
+        return pacoteRepo.findAllByConta(contaRepo.findByContaNumero(numeroConta));
     }
     
-    public PacoteModel listaUltimoPacoteDaConta(Long id){
-
-        ContaModel conta = contaRepo.findById(id).get();
-        PacoteModel pacote = pacoteRepo.findTopByContaOrderByIdPacoteDesc(conta);
-        if(pacote == null){
-            return null;
-        }
-        return pacote;
+    public PacoteModel listaUltimoPacoteDaConta(String numeroConta){      
+        return pacoteRepo.findTopByContaOrderByIdPacoteDesc(contaRepo.findByContaNumero(numeroConta));
     }
 
-    public boolean statusUltimoPacote(Long id){
+    public boolean statusUltimoPacote(String numeroConta){
+        PacoteModel pacote = pacoteRepo.findTopByContaOrderByIdPacoteDesc(contaRepo.findByContaNumero(numeroConta));
+        return pacote == null || pacote.getStatusPacote().equals("Fechado");
+    }      
 
-        PacoteModel pacote = listaUltimoPacoteDaConta(id);
 
-        if (pacote == null || pacote.getStatusPacote().equals("Fechado")){
-        return true;
-        }else {
-        return false;
-        }
-    }
-
-    public PacoteModel criarPacoteServiceVazio(ContaModel conta){
-        boolean statusPacote = statusUltimoPacote(conta.getIdConta());
+    public PacoteModel criarPacoteServiceVazio(ContaModel conta ){
+        boolean statusPacote = statusUltimoPacote(conta.getContaNumero());
         if(!statusPacote){
             return null;
         }

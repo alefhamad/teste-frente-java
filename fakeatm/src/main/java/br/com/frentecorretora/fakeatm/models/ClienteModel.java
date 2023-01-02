@@ -12,6 +12,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+
 @Entity
 @Table(name = "clientes")
 public class ClienteModel {
@@ -23,6 +24,7 @@ public class ClienteModel {
     @Column(name = "cliente_nome", nullable = false)
     private String clienteNome;
 
+    //@JsonIgnore
     @Column(name = "cliente_senha", nullable = false)
     private String clienteSenha;
 

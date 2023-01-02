@@ -68,7 +68,7 @@ public class PacoteModel {
         return dataCriacao;
     }
 
-    public void setDataCriacao(Instant dataCriacao) {
+    public void setDataCriacao() {
         this.dataCriacao = Instant.now();
     }
 

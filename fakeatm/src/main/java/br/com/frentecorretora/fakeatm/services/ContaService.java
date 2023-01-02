@@ -14,8 +14,7 @@ public class ContaService {
 
     //find all pacotes by conta
     public ContaModel findByContaNumero(String contaNumero){
-        ContaModel conta = contaRepo.findByContaNumero(contaNumero);
-        return conta;
+        return contaRepo.findByContaNumero(contaNumero);
     }
     
 

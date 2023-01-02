@@ -17,62 +17,74 @@ public class TransacaoService {
     @Autowired
     private PacoteService pacoteService;
 
-    // public TransacaoModel listarTransacoes()
-    public TransacaoModel criarTransacaoService(ContaModel conta, TransacaoModel transacao) {
-        boolean statusPacote = pacoteService.statusUltimoPacote(conta.getIdConta());
+    public TransacaoModel criarTransacaoService(ContaModel conta, TransacaoModel transacao)
+            throws ValorExcedidoException, TipoDeNotaException {
+        boolean statusPacote = pacoteService.statusUltimoPacote(conta.getContaNumero());
 
         double valor = transacao.getValor();
         double tipoDeNota = transacao.getTipoDeNota();
         double limiteDeNota = transacao.getLimiteDeNotas();
-        double limiteValor = transacao.getLimiteDeValor();
         double valorPorNota = valor / tipoDeNota;
         double qtdDeTransacoes = valorPorNota / limiteDeNota;
-        System.out.println("aqui1");
-        System.out.println(valorPorNota);
+
+        double limitePorPacote = 0; // Poderia ser um Enum.
+        if (tipoDeNota == 10.00) {
+            limitePorPacote = 500.00;
+        }
+        if (tipoDeNota == 50.00) {
+            limitePorPacote = 2500.00;
+        }
+        if (tipoDeNota == 100.00) {
+            limitePorPacote = 5000.00;
+        }
+
+        if (valor > 5000.00) {
+            throw new ValorExcedidoException("Valor não pode ser maior que R$5000.00");
+        }
+        if (valor % tipoDeNota != 0) {
+            throw new TipoDeNotaException("Apenas, valores compatível com 10, 50 e 100");
+        }
+
         if (statusPacote && qtdDeTransacoes <= 1) {
             PacoteModel newPacote = pacoteService.criarPacoteService(conta);
+            transacao.setQuantidadeNotasUtilizadas((int) (valor / tipoDeNota));
+            transacao.setStatusTransacao("Finalizada");
+            transacao.setLimiteDeValor((int)(limitePorPacote));
+            System.out.println(limitePorPacote);
+            newPacote.setDataFechamento();
             newPacote.setStatusPacote("Fechado");
-            transacao.setQuantidadeDeNotas(valorPorNota);
-            TransacaoModel newTransacao = salvarTransacaoService(newPacote, transacao);
-            System.err.println("aqui2");
-            return newTransacao;
+            return salvarTransacaoService(newPacote, transacao);
         }
-        
-        double limitePorPacote = 0; //Poderia ser um Enum.
-            if(tipoDeNota == 10.00){
-                limitePorPacote = 500.00;
-            }
-            if(tipoDeNota == 50.00){
-                limitePorPacote = 2500.00;
-            }
-            if(tipoDeNota == 100.00){
-                limitePorPacote = 5000.00;
-            }
 
-        PacoteModel newPacote = pacoteService.criarPacoteService(conta);
-        while(valor > 0){
+        /*  
+        Para criar as transações no mesmo pacote, basta jogar a linha 63 para linha 60;
+        */
 
+        while (valor > 0) {
+
+            PacoteModel newPacote = pacoteService.criarPacoteService(conta);
             double reduz = limitePorPacote;
-            newPacote.setStatusPacote("Fechado");
+            if (valor < limitePorPacote) {
+                reduz = valor;
+            }
+
             transacao.setValor(reduz);
-            transacao.setQuantidadeDeNotas(valorPorNota);
-            System.out.println(valorPorNota);
-            TransacaoModel newTransacao = salvarTransacaoService(newPacote, transacao);
+            transacao.setQuantidadeNotasUtilizadas((int) (reduz / tipoDeNota));
+            transacao.setStatusTransacao("Finalizada");
+            transacao.setLimiteDeValor((int)(limitePorPacote));
+            newPacote.setDataFechamento();
+            newPacote.setStatusPacote("Fechado");
+
+            salvarTransacaoService(newPacote, transacao);
             valor -= limitePorPacote;
-            System.out.println("aqui3");
-            
         }
-        return transacao;
-
-    }
-
-    public TransacaoModel criarTransacaoRecursiva(TransacaoModel transacao, PacoteModel pacote) {
         return transacao;
 
     }
 
     public TransacaoModel salvarTransacaoService(PacoteModel pacote, TransacaoModel transacao) {
-        TransacaoModel newTransacao = new TransacaoModel(transacao.getValor(), transacao.getTipoDeNota(), null, pacote);
+        TransacaoModel newTransacao = new TransacaoModel(transacao.getValor(), transacao.getTipoDeNota(),
+                transacao.getStatusTransacao(), transacao.getQuantidadeNotasUtilizadas(), transacao.getLimiteDeValor(), pacote);
         transacaoRepo.save(newTransacao);
         return newTransacao;
 
