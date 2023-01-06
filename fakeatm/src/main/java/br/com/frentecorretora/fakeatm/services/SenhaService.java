@@ -21,7 +21,7 @@ public class SenhaService {
 
     //create a class to validate the password
     public boolean validaSenha(ClienteModel cliente){
-        return encoder.matches(cliente.getClienteSenha(), clienteRepo.findByClienteCpf(cliente.getClienteCpf()).getClienteSenha());
+        return encoder.matches(cliente.getClienteSenha(), clienteRepo.findClienteByClienteCpf(cliente.getClienteCpf()).getClienteSenha());
     }
 
 

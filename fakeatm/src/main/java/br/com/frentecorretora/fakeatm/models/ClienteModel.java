@@ -34,6 +34,10 @@ public class ClienteModel {
     @Column(name = "cliente_cpf", nullable = false, unique = true)
     private String clienteCpf;
 
+    @Column(name = "cliente_role", nullable = false)
+    private String clienteRole;
+
+    
     @OneToOne(mappedBy = "cliente", cascade = CascadeType.REMOVE)
     @JsonIgnoreProperties("cliente")
     private ContaModel conta;
@@ -41,14 +45,19 @@ public class ClienteModel {
     public ClienteModel(){
     }
 
-    public ClienteModel(String clienteNome, String clienteSenha, String clienteEndereco, String clienteCpf) {
+    
+    
+    public ClienteModel(String clienteNome, String clienteSenha, String clienteEndereco, String clienteCpf,
+            String clienteRole) {
         this.clienteNome = clienteNome;
         this.clienteSenha = clienteSenha;
         this.clienteEndereco = clienteEndereco;
         this.clienteCpf = clienteCpf;
+        this.clienteRole = clienteRole;
     }
-    
-    
+
+
+
     public long getIdCliente() {
         return idCliente;
     }
@@ -95,6 +104,14 @@ public class ClienteModel {
 
     public void setConta(ContaModel conta) {
         this.conta = conta;
+    }
+
+    public String getClienteRole() {
+        return clienteRole;
+    }
+
+    public void setClienteRole(String clienteRole) {
+        this.clienteRole = clienteRole;
     }
 
 }

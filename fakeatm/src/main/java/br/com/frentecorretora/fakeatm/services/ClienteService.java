@@ -2,6 +2,8 @@ package br.com.frentecorretora.fakeatm.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +32,8 @@ public class ClienteService {
 
     public ClienteModel salvarClienteService(ClienteModel cliente){
         
-        if(validaClienteModel(cliente).equals("Cpf inválido")){            return null;
+        if(validaClienteModel(cliente).equals("Cpf inválido")){            
+            return null;
         }
         cliente.setClienteSenha(senhaService.senhaEncoder(cliente.getClienteSenha()));
         clienteRepo.save(cliente);
@@ -62,6 +65,12 @@ public class ClienteService {
         }
         return resposta;
     }
+
+    public String retornaSenha(ClienteModel cliente){
+        return clienteRepo.findClienteByClienteCpf(cliente.getClienteCpf()).getClienteSenha();
+    }
+
+    
 
     public boolean validaCpf(String cpf){
         //remove all non-digit characters

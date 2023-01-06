@@ -1,9 +1,14 @@
 package br.com.frentecorretora.fakeatm.controllers;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.access.prepost.PreFilter;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.frentecorretora.fakeatm.models.ClienteModel;
 import br.com.frentecorretora.fakeatm.repos.ClienteRepo;
+import br.com.frentecorretora.fakeatm.services.AuthService;
 import br.com.frentecorretora.fakeatm.services.ClienteService;
 import br.com.frentecorretora.fakeatm.services.SenhaService;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -34,6 +40,9 @@ public class ClienteController {
 
     @Autowired
     public ClienteRepo clienteRepo;
+
+    @Autowired
+    public AuthService auth;
 
     @GetMapping("/listar")
 
@@ -64,7 +73,7 @@ public class ClienteController {
     @DeleteMapping("/deletar/{cpf}")
     public ResponseEntity <Long> deletaCliente(@PathVariable String cpf){
         
-        clienteService.deleteClientById(clienteRepo.findByClienteCpf(cpf).getIdCliente());
+        clienteRepo.deleteClienteByClienteCpf(cpf);
         return ResponseEntity.noContent().build();
     }
 
@@ -83,5 +92,17 @@ public class ClienteController {
     public ResponseEntity<String> deletaCliente(@PathVariable String cpf, @RequestBody ClienteModel cliente){
 
         return ResponseEntity.ok().body(clienteRepo.save(cliente).getClienteCpf());
+    }
+
+    @GetMapping("/ver/{cpf}")
+    public ResponseEntity<Optional<ClienteModel>> verCliente(@PathVariable("cpf") String cpf){
+        try {
+            if(!auth.isCliente(cpf)){
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+            return ResponseEntity.ok(clienteRepo.findByClienteCpf(cpf));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 }
