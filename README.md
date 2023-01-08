@@ -105,3 +105,6 @@ get request /api/pacote/lista/ultimo{
     (Retorna apenas seus último pacotes)
 }
 ```
+
+##
+Caso queira apenas testar a api ela está em deploy no fakeatm.alefhamad.com atrás de um HTTPS-AWS Load balancer e conectando com AWS aurora.
