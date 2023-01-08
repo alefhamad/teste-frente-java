@@ -4,6 +4,14 @@ Este submódulo, contém o código em Java para a aplicação FAKEATM.
 ###
 Tecnologias utilizadas.
 
+- :hammer_and_wrench: [Java](https://www.java.com/)
+- :hammer_and_wrench: [lombok](https://projectlombok.org/)
+- :hammer_and_wrench: [hibernate](https://hibernate.org/)
+- :hammer_and_wrench: [springsecurity](https://spring.io/projects/spring-security)
+
+- :hammer_and_wrench: [solarLint](https://marketplace.visualstudio.com/items?itemName=SonarSource.sonarlint-vscode)
+- :gear: [mySql](https://www.mysql.com/)
+- :hammer_and_wrench: [vscode](https://code.visualstudio.com/)
 
 ##
 Para executar a aplicação pelo código fonte, clone o repositório, edite o arquivo application.properties com os dados necessários para seu banco de dados MySql. 
@@ -87,11 +95,13 @@ Como os pacotes tem limite de 50 notas e as operções tem limite de 5000, não 
 
 
 Para listar seus pacotes:
-
+~~~
 get request /api/pacote/lista/todos{
     (Retorna um Json com todos os seus pacotes)
 }
-
+~~~
+```
 get request /api/pacote/lista/ultimo{
     (Retorna apenas seus último pacotes)
 }
+```
