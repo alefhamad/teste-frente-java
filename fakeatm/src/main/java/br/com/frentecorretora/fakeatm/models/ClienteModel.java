@@ -1,6 +1,5 @@
 package br.com.frentecorretora.fakeatm.models;
 
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,11 +11,10 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-
 @Entity
 @Table(name = "clientes")
 public class ClienteModel {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public long idCliente;
@@ -24,39 +22,37 @@ public class ClienteModel {
     @Column(name = "cliente_nome", nullable = false)
     private String clienteNome;
 
-    //@JsonIgnore
+    @Column(name = "data_de_nascimento", nullable = false)
+    private String dataDeNascimento;
+
     @Column(name = "cliente_senha", nullable = false)
     private String clienteSenha;
 
     @Column(name = "cliente_endereco", nullable = false)
     private String clienteEndereco;
 
-    @Column(name = "cliente_cpf", nullable = false, unique = true)
+    @Column(name = "cliente_cpf", nullable = false, unique = true, updatable = false)
     private String clienteCpf;
 
     @Column(name = "cliente_role", nullable = false)
     private String clienteRole;
 
-    
     @OneToOne(mappedBy = "cliente", cascade = CascadeType.REMOVE)
     @JsonIgnoreProperties("cliente")
     private ContaModel conta;
-    //deafult constructor for
-    public ClienteModel(){
+
+    public ClienteModel() {
     }
 
-    
-    
     public ClienteModel(String clienteNome, String clienteSenha, String clienteEndereco, String clienteCpf,
-            String clienteRole) {
+            String clienteRole, String dataDeNascimento) {
         this.clienteNome = clienteNome;
         this.clienteSenha = clienteSenha;
         this.clienteEndereco = clienteEndereco;
         this.clienteCpf = clienteCpf;
         this.clienteRole = clienteRole;
+        this.dataDeNascimento = dataDeNascimento;
     }
-
-
 
     public long getIdCliente() {
         return idCliente;
@@ -65,13 +61,21 @@ public class ClienteModel {
     public void setIdCliente(long idCliente) {
         this.idCliente = idCliente;
     }
-    
+
     public String getClienteNome() {
         return clienteNome;
     }
 
     public void setClienteNome(String clienteNome) {
         this.clienteNome = clienteNome;
+    }
+
+    public String getDataDeNascimento() {
+        return dataDeNascimento;
+    }
+
+    public void setDataDeNascimento(String dataDeNascimento) {
+        this.dataDeNascimento = dataDeNascimento;
     }
 
     public String getClienteSenha() {
@@ -113,5 +117,4 @@ public class ClienteModel {
     public void setClienteRole(String clienteRole) {
         this.clienteRole = clienteRole;
     }
-
 }

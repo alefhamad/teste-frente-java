@@ -6,9 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,9 +29,6 @@ public class AuthController {
     private ClienteRepo clienteRepo;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
     private ClienteService clienteService;
 
     @PostMapping("/signin")
@@ -51,17 +46,13 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@RequestBody SingUpDto singUpDto) {
+    public ResponseEntity<String> registerUser(@RequestBody SingUpDto singUpDto) {
 
-        if (clienteRepo.existsByClienteCpf(singUpDto.getUsername())) {
+        if (Boolean.TRUE.equals(clienteRepo.existsByClienteCpf(singUpDto.getUsername()))) {
             return new ResponseEntity<>("Nome de usuário já existe", HttpStatus.BAD_REQUEST);
         }
-
-        ClienteModel cliente = new ClienteModel(singUpDto.getName(), singUpDto.getPassword(), singUpDto.getEndereco(),
-                singUpDto.getUsername(), "ROLE_USER");
-
+        ClienteModel cliente = new ClienteModel(singUpDto.getName(), singUpDto.getPassword(), singUpDto.getEndereco(),singUpDto.getUsername(), "ROLE_USER", singUpDto.getDataDeNascimento());
         clienteService.salvarClienteService(cliente);
-
         return new ResponseEntity<>("Usuário registrado com sucesso", HttpStatus.OK);
     }
 

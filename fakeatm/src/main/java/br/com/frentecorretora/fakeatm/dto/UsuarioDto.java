@@ -3,11 +3,10 @@ package br.com.frentecorretora.fakeatm.dto;
 import lombok.Data;
 
 @Data
-public class SingUpDto {
+public class UsuarioDto {
+    
     private String name;
     private String password;
     private String endereco;
     private String username;
-    private String dataDeNascimento;
-    
 }

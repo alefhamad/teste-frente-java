@@ -19,6 +19,7 @@ public class TransacaoService {
 
     public TransacaoModel criarTransacaoService(ContaModel conta, TransacaoModel transacao)
             throws ValorExcedidoException, TipoDeNotaException {
+
         boolean statusPacote = pacoteService.statusUltimoPacote(conta.getContaNumero());
 
         double valor = transacao.getValor();
@@ -45,20 +46,22 @@ public class TransacaoService {
             throw new TipoDeNotaException("Apenas, valores compatível com 10, 50 e 100");
         }
 
+        
+
         if (statusPacote && qtdDeTransacoes <= 1) {
             PacoteModel newPacote = pacoteService.criarPacoteService(conta);
             transacao.setQuantidadeNotasUtilizadas((int) (valor / tipoDeNota));
             transacao.setStatusTransacao("Finalizada");
-            transacao.setLimiteDeValor((int)(limitePorPacote));
-            System.out.println(limitePorPacote);
+            transacao.setLimiteDeValor((int) (limitePorPacote));
             newPacote.setDataFechamento();
             newPacote.setStatusPacote("Fechado");
             return salvarTransacaoService(newPacote, transacao);
         }
 
-        /*  
-        Para criar as transações no mesmo pacote, basta jogar a linha 63 para linha 60;
-        */
+        /*
+         * Para criar as transações no mesmo pacote, basta jogar a linha 63 para linha
+         * 60;
+         */
 
         while (valor > 0) {
 
@@ -71,7 +74,7 @@ public class TransacaoService {
             transacao.setValor(reduz);
             transacao.setQuantidadeNotasUtilizadas((int) (reduz / tipoDeNota));
             transacao.setStatusTransacao("Finalizada");
-            transacao.setLimiteDeValor((int)(limitePorPacote));
+            transacao.setLimiteDeValor((int) (limitePorPacote));
             newPacote.setDataFechamento();
             newPacote.setStatusPacote("Fechado");
 
@@ -84,7 +87,8 @@ public class TransacaoService {
 
     public TransacaoModel salvarTransacaoService(PacoteModel pacote, TransacaoModel transacao) {
         TransacaoModel newTransacao = new TransacaoModel(transacao.getValor(), transacao.getTipoDeNota(),
-                transacao.getStatusTransacao(), transacao.getQuantidadeNotasUtilizadas(), transacao.getLimiteDeValor(), pacote);
+                transacao.getStatusTransacao(), transacao.getQuantidadeNotasUtilizadas(), transacao.getLimiteDeValor(),
+                pacote);
         transacaoRepo.save(newTransacao);
         return newTransacao;
 
