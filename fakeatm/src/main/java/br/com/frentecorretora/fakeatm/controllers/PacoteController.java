@@ -39,5 +39,5 @@ public class PacoteController {
     @GetMapping("/lista/todos")
     public List<PacoteModel> listarPacotes(){
         return pacoteService.listaPacotes();
-    }
+    }    
 }

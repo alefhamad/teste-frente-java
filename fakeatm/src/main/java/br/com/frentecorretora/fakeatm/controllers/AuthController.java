@@ -52,8 +52,17 @@ public class AuthController {
             return new ResponseEntity<>("Nome de usuário já existe", HttpStatus.BAD_REQUEST);
         }
         ClienteModel cliente = new ClienteModel(singUpDto.getName(), singUpDto.getPassword(), singUpDto.getEndereco(),singUpDto.getUsername(), "ROLE_USER", singUpDto.getDataDeNascimento());
-        clienteService.salvarClienteService(cliente);
-        return new ResponseEntity<>("Usuário registrado com sucesso", HttpStatus.OK);
+        
+        //try to sabe the user to the database using clienteService if it returns null catch the exception and return a bad request
+        try {
+            ClienteModel clienteSave = clienteService.salvarClienteService(cliente);
+            if(clienteSave == null){
+                return new ResponseEntity<>("Erro ao registrar o usuário", HttpStatus.BAD_REQUEST);
+            }
+            return new ResponseEntity<>("Usuário registrado com sucesso", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Erro ao registrar o usuário", HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PostMapping("/signout")
@@ -62,3 +71,4 @@ public class AuthController {
         return new ResponseEntity<>("Logout realizado com sucesso", HttpStatus.OK);
     }
 }
+

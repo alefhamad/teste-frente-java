@@ -29,4 +29,7 @@ public class AuthService {
         return cpf.equals(returnPrincipal());
     }
 
+    public String isAuth(){
+        return SecurityContextHolder.getContext().getAuthentication().toString();
+    }
 }

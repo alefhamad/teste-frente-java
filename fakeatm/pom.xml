@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>br.com.frentecorretora</groupId>
 	<artifactId>fakeatm</artifactId>
-	<version>1.0.1-Release</version>
+	<version>1.0.2-Release</version>
 	<name>fakeatm</name>
 	<description>Aplicação para projeto dev Junior</description>
 	<properties>
@@ -28,18 +28,15 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
-			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
@@ -57,7 +54,6 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<scope>annotationProcessor</scope>
 		</dependency>
 	</dependencies>
 	<build>
