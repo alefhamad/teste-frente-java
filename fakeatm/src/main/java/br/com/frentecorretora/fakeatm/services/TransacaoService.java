@@ -46,7 +46,7 @@ public class TransacaoService {
             throw new TipoDeNotaException("Apenas, valores compatível com 10, 50 e 100");
         }
 
-        
+
 
         if (statusPacote && qtdDeTransacoes <= 1) {
             PacoteModel newPacote = pacoteService.criarPacoteService(conta);
@@ -57,12 +57,6 @@ public class TransacaoService {
             newPacote.setStatusPacote("Fechado");
             return salvarTransacaoService(newPacote, transacao);
         }
-
-        /*
-         * Para criar as transações no mesmo pacote, basta jogar a linha 63 para linha
-         * 60;
-         */
-
         while (valor > 0) {
 
             PacoteModel newPacote = pacoteService.criarPacoteService(conta);
