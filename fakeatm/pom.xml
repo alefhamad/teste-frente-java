@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>br.com.frentecorretora</groupId>
 	<artifactId>fakeatm</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.1-Release</version>
 	<name>fakeatm</name>
 	<description>Aplicação para projeto dev Junior</description>
 	<properties>

@@ -12,37 +12,37 @@ import br.com.frentecorretora.fakeatm.repos.PacoteRepo;
 @Service
 public class PacoteService {
 
-
     @Autowired
     private PacoteRepo pacoteRepo;
 
     @Autowired
     private ContaRepo contaRepo;
 
+    @Autowired
+    private ClienteService clienteService;
 
-    
-    
-    public PacoteModel criarPacoteService(ContaModel conta){
+    public PacoteModel criarPacoteService(ContaModel conta) {
         PacoteModel novoPacote = new PacoteModel(conta);
         pacoteRepo.save(novoPacote);
         return novoPacote;
     }
 
-    public List<PacoteModel> listaPacotes(String numeroConta){
-        return pacoteRepo.findAllByConta(contaRepo.findByContaNumero(numeroConta));
-    }
-    
-    public PacoteModel listaUltimoPacoteDaConta(String numeroConta){      
-        return pacoteRepo.findTopByContaOrderByIdPacoteDesc(contaRepo.findByContaNumero(numeroConta));
+    public List<PacoteModel> listaPacotes() {
+        return pacoteRepo.findAllByConta(
+                contaRepo.findByContaNumero(clienteService.retornaClienteContexto().getConta().getContaNumero()));
     }
 
-    public boolean statusUltimoPacote(String numeroConta){
+    public PacoteModel listaUltimoPacoteDaConta(){      
+        return pacoteRepo.findTopByContaOrderByIdPacoteDesc(contaRepo.findByContaNumero(clienteService.retornaClienteContexto().getConta().getContaNumero()));
+    }
+
+    public boolean statusUltimoPacote(String numeroConta) {
         PacoteModel pacote = pacoteRepo.findTopByContaOrderByIdPacoteDesc(contaRepo.findByContaNumero(numeroConta));
         return pacote == null || pacote.getStatusPacote().equals("Fechado");
-    }      
+    }
 
-
-    public PacoteModel criarPacoteServiceVazio(ContaModel conta ){
+    public PacoteModel criarPacoteServiceVazio(){
+        ContaModel conta = clienteService.retornaClienteContexto().getConta();
         boolean statusPacote = statusUltimoPacote(conta.getContaNumero());
         if(!statusPacote){
             return null;
@@ -52,5 +52,3 @@ public class PacoteService {
         return novoPacote;
     }
 }
-
-

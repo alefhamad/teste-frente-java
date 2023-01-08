@@ -61,6 +61,9 @@ public class ClienteService {
     }
 
     public ClienteModel retornaClienteContexto() {
+        if(AuthService.returnPrincipal() == null) {
+            return null;
+        }
         return clienteRepo.findClienteByClienteCpf(AuthService.returnPrincipal());
     }
 
