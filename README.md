@@ -5,14 +5,17 @@ Este submódulo, contém o código em Java para a aplicação FAKEATM.
 Tecnologias utilizadas.
 
 - :hammer_and_wrench: [Java](https://www.java.com/)
-- :hammer_and_wrench: [lombok](https://projectlombok.org/)
-- :hammer_and_wrench: [hibernate](https://hibernate.org/)
-- :hammer_and_wrench: [springsecurity](https://spring.io/projects/spring-security)
+    - :hammer_and_wrench: [lombok](https://projectlombok.org/)
+    - :hammer_and_wrench: [hibernate](https://hibernate.org/)
+    - :hammer_and_wrench: [springsecurity](https://spring.io/projects/spring-security)
 
 - :hammer_and_wrench: [solarLint](https://marketplace.visualstudio.com/items?itemName=SonarSource.sonarlint-vscode)
 - :gear: [mySql](https://www.mysql.com/)
 - :hammer_and_wrench: [vscode](https://code.visualstudio.com/)
 
+- :cloud: [AWS](https://aws.amazon.com)
+    - :computer: [EC2](https://aws.amazon.com/pt/ec2/)
+    - :lock: [elasticloadbalancer](https://aws.amazon.com/pt/elasticloadbalancing/)
 ##
 Para executar a aplicação pelo código fonte, clone o repositório, edite o arquivo application.properties com os dados necessários para seu banco de dados MySql. 
 Na pasta raíz rode o comando .\fakeatm\mvnw.cmd package, ele criará um binário dentro da pasta target, esse binário pode ser rodado utilizando o JRE >= 1.8.0 com o comando java -jar target\arquivo.jar.
