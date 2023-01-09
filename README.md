@@ -35,11 +35,11 @@ Para utilizar a aplicação você pode utilizar uma plataforma de desenvolviment
 Singup
 ~~~
 post request /api/auth/signup{
-    "name": "string",
-    "password": "string",
-    "endereco": "string",
-    "username": "string",
-    "dataDeNascimento": "string"
+    "name": "string", <- Seu nome 
+    "password": "string", <- Sua senha
+    "endereco": "string", <- Seu endereço
+    "username": "string", <- Seu CPF
+    "dataDeNascimento": "string" <- Sua data de nascimento
 }
 ~~~
 
